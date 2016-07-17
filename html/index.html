@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jigsawify</title>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans|Lobster"
+          rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+     <link rel="stylesheet" href="css/index.css"/>
+     <link rel="stylesheet" href="css/jstree.style.min.css"/>
+     <link href="css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body  style = "background-color: #CC5500">
+
+    <h2 class="unselectable" id="title" 
+          title="Creates a DWG or DXF to drive a laser cutter"
+           style = "text-align:center
+                    font-family: "Droid Sans"
+                    background-color: #CC5500;
+                    padding: 0;">
+      Jigsawify
+    </h2>
+    <div>
+      <p id="explanation">Build a one-of-a-kind jigsaw puzzle with A360!</p>
+      <p id="instruction">1. Sign in with A360 credencial and choose your favorite picture</p>
+    </div>     
+
+    <div class="row" >
+    <div  class="col-sm-1" >
+    </div  >
+    <div  class="col-sm-2" >
+        <div class="col-sm-1 forgeDMTreeView">
+            <div id="myfiles">
+                <br/>
+                <a href="#" id="authenticate" class="btn btn-warning btn-block"><span class="glyphicon glyphicon-user"></span> SIGN IN A360</a>
+                <hr>
+                <label for="env">Select environment:</label>
+                <select id="env" class="input-small form-control"  style="width:150px;">
+                    <!-- <option value="dev">Development</option> -->
+                    <option value="stg" selected>Staging</option>
+                    <option value="prod">Production</option>
+                </select>
+
+            </div>
+        </div> 
+    </div>
+
+    <div class="col-md-4 text-center container" > 
+      <div id="content" class="media-drop text-center">
+        <div class="container-fluid">           
+          <div class="row-fluid">
+            <div style="display:none" class="wrapper" id="droppedimage">
+              <img alt="Original Image" id="image">
+            </div>
+            <div style="display:none" class="wrapper2" id="engravedimage">
+              <img alt="Engraving Image" id="engimage">
+            </div>
+          </div>
+        </div>
+        <div style="display:none" class="wrapper3" id="loading">
+        </div>
+        <div style="display:none" id="jigsaw">
+          <img alt="Jigsaw" id="jigimage">
+        </div>   
+
+        <div id="dropbox" class="media-drop-placeholder">
+          <span class="media-drop-placeholder-title">Drop image here</span>
+          <br/>
+          <span class="media-drop-placeholder-or">or</span>
+          <br />
+          <div class="media-drop-placeholder-uploadbutton">
+            <input id="realUploadBtn" name="media-drop-placeholder-file"
+                   type="file" accept="image/*" tabindex="-1" />
+            <button id="uploadBtn" type="button" class="btn" tabindex="-1">
+              Browse&hellip;
+            </button>
+          </div>
+        </div>
+      </div>    
+       
+          <input class="slider" id="threshold" type="range" min="0" max="100"
+               value="70" step="5" onchange="slide(this.value)" />         
+
+          <div id="size" >
+            <input class="entry" id="width" type="number" class="num" />
+            <span class="desc">&nbsp;x&nbsp;</span>
+            <input class="entry" id="height" type="number" class="num" />
+            <select class="units" id="units">
+              <option value="inches">inches</option>
+              <option value="cm">cm</option>
+            </select>
+            <input class="entry" id="pieces" type="number" class="num" />
+            <span class="desc">&nbsp;pieces</span>
+          </div>
+
+        <div  id="nav">
+          <button id="back" type="button" class="btn" onclick="back();">Back</button>
+          <button id="next" type="button" class="btn" onclick="forward();">Next</button>
+          <button id="dwg" type="button" class="btn">DWG</button>
+          <button id="dxf" type="button" class="btn">DXF</button>
+          <button id="sendtodropbox" type="button" class="btn">Dropbox</button>
+        </div>
+     
+    </div>
+    </div>
+
+
+    <br/><br/><br/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.html5uploader-1.1.js"></script>
+    <script src="js/exif.js"></script>
+    <script src="js/edgedetector.js"></script>
+    <script src="js/spin.min.js"></script>
+    <script src="js/ga.js"></script>
+    <script src="js/sa.js"></script>
+     <script src="js/jstree.min.js"></script>
+    <script src="js/bootstrap-dialog.min.js"></script>
+
+
+    <script src="main/jigsaw-client.js"></script>
+    <script src="main/dm-client.js"></script>
+
+  </body>
+</html>
