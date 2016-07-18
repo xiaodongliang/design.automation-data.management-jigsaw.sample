@@ -9,7 +9,7 @@
 [![License](http://img.shields.io/:license-mit-red.svg)](http://opensource.org/licenses/MIT)
 
 ##  Description
-This sample is extended from [jigsawify](https://github.com/KeanW/jigsawify) sample. The old sample provides a template drawing to embed the jigsaw by [Design Automation of Forge](https://developer.autodesk.com/en/docs/design-automation/v2). While current sample allows the user to select the drawing of his/her A360 repository, using [Data Management of Forge](https://developer.autodesk.com/en/docs/data/v2).
+This sample is extended from [jigsawify](https://github.com/KeanW/jigsawify) sample. The old sample provides a template drawing to embed the jigsaw by [Design Automation of Forge](https://developer.autodesk.com/en/docs/design-automation/v2). While current sample allows the user to select the drawing of his/her A360 repository, using [Data Management of Forge](https://developer.autodesk.com/en/docs/data/v2). It also integrates the ability to upload the result drawing back to A360 and Dropbox repository of the user.
 
 ## Live demo
 Try this sample live at https://forge-dm-design-auto.herokuapp.com/# (or see it running at [Jigsaw Demo](http://autode.sk/1XSkKtM)). You must have some DWG drawings under an A360 account. If you don't, then please go to [A360](https://a360.autodesk.com/) and create a project and upload some files.
