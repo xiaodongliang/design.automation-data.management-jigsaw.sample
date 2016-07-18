@@ -1,25 +1,10 @@
-/////////////////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Xiaodong Liang 2016 - Forge/Developer Technical Services
-//
-// Permission to use, copy, modify, and distribute this software in
-// object code form for any purpose and without fee is hereby granted,
-// provided that the above copyright notice appears in all copies and
-// that both that copyright notice and the limited warranty and
-// restricted rights notice below appear in all supporting
-// documentation.
-//
-// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
-// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
-// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
-// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
-// UNINTERRUPTED OR ERROR FREE.
-/////////////////////////////////////////////////////////////////////////////////
-
 //This is a module for sumitting workitem (job) to Design Automation of Forge.
-//It is based on the logic of
-//https://github.com/Developer-Autodesk/data.management.api-nodejs-sample
-//The difference is: the jigsaw data of this sample is produced by the client
+//It refers to the logic of https://github.com/KeanW/jigsawify which is written by 
+//Kean Walmsley
+
+//The difference is: the jigsaw data in this sample is produced by the client,
+//while the sample of Kean produces the jigsaw data on the server.
+
 
 var express = require('express');
 var request = require('request');
@@ -28,19 +13,24 @@ var url = require('url');
 var crypto = require('crypto');
 var AdmZip = require('adm-zip');
 var fs = require('fs');
+
 //make some folders to store the files
+
+//for the orignal drawings
 fs.mkdir('uploads', function() {});
+//for the result zip and report file
 fs.mkdir('downloads', function() {});
+//for the temporary status file of work item
 fs.mkdir('items', function() {});
 
+//get modules
 var config_dm = require('./config-dm');
 var config_design_auto = require('./config-design-auto');
 var dm_help = require('./dm-help');
 var GlobalData = require('./globals');
 
-//sample url address
+//url address of this sample
 var siteUrl = undefined;
-
 
 //do the job of workitem
 router.get('/submitworkitem', function (req, res) {
@@ -48,9 +38,12 @@ router.get('/submitworkitem', function (req, res) {
     console.log('[Req: Submit Work Item]');
 
     //reset the status of uploading result file to A360
+    //as a new work item is starting...
     GlobalData.GetData().A360isReady = false;
     GlobalData.GetData().A360FileSt = ''
 
+    //to produce a random ID for this work item
+    //this is for the client to check.
     var reqId = randomValueBase64(6);
     res.end(reqId);
 
@@ -58,12 +51,12 @@ router.get('/submitworkitem', function (req, res) {
     console.log('   Site Url:　' +siteUrl);
 
     var args = url.parse(req.url, true).query;
-
     console.log('   Arg for Submit Work Item:　' +args);
 
-    //workaround that server gets pixel json from client
+    //workaround that jigsaw data is produced and sent from client
     var pixelJosonFile = siteUrl + '/uploads/' + 'test.json';
        authorizeAndCall(function(design_automation_auth) {
+
            //after getting valid token for design automation
           createWorkItem_Package(
               design_automation_auth,
@@ -76,6 +69,11 @@ router.get('/submitworkitem', function (req, res) {
 });
 
 
+
+//check status of work item
+//note: this is NOT work item status checking of Design Automation
+//this is a checking provided by the sample, but it is based on the
+//status of Design Automation
 router.get('/checkworkitem', function (req, res) {
 
    console.log('[Req: Check Work Item Status]');
@@ -87,6 +85,7 @@ router.get('/checkworkitem', function (req, res) {
             console.log('   Check Work Item Status Error: ' + err);
             res.end();
           } else {
+            //if such status file exsits, read its content out and send to client
             console.log('   Returning item to caller (' + args.item + '): ' + blob);
             res.send(blob);
           }
@@ -104,7 +103,9 @@ function randomValueBase64 (len) {
     .replace(/\//g, '0'); // replace '/' with '0'
 }
 
+//authorize design automation to generate the token
 function authorizeAndCall(success) {
+  console.log('[Authorize Design Automation]');
   var params = {
     client_id: config_design_auto.credentials.consumerKey,
     client_secret: config_design_auto.credentials.consumerSecret,
@@ -115,22 +116,23 @@ function authorizeAndCall(success) {
     { form: params },
     function (error, response, body) {
       if (error) {
-        console.log('Error: ' + error);
+        console.log(' Error: ' + error);
       }
       if (!error && response.statusCode == 200) {                
 
         var authResponse = JSON.parse(body);
         var auth = authResponse.token_type + ' ' + authResponse.access_token;
 
-        console.log('Authorized: ' + auth);
+        console.log(' Authorized: ' + auth);
 
         success(auth);
       } else {
-        console.log('Unknown status: ' + response.statusCode);        
+        console.log(' Unknown status: ' + response.statusCode);        
       }
     }
   );
 }
+
 
 function createWorkItem_Package(auth, reqId, args, pixUrl,env,dmapioauthtoken) {
 
