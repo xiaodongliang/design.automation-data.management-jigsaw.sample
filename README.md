@@ -50,9 +50,13 @@ Try this sample live at https://forge-dm-design-auto.herokuapp.com/# (or see it 
 
 # DropBox integration
 
-The feature <b>Send to DropBox</b> requires a developer key & secret. Please visit [DropBox Developer](https://www.dropbox.com/developers/apps) and create one.  Update the file /routes/dropbox.js with this information. For this sample, make sure to use http://localhost:3000/api/dropbox/callback as Redirect URI (for OAuth authentication) on Dropbox key creation. This sample code have a workaround to deal with local.host & localhost redirect, see comments at dropbox.js file. Also note that new developer keys on dropbox are created with Status:Development, so it will only work with your account (owner of the key). You must apply for Prodction with Dropbox team so you can use with other users.
+* The feature <b>Send to DropBox</b> requires a developer key & secret. Please visit [DropBox Developer](https://www.dropbox.com/developers/apps) and create one. After applying the key and secret of Dropbox, rename `_config-dropbox.js` in [Routes](/routes) to `config-dropbox.js`. Put the key and secret in the corresponding lines.
 
-After applying the key and secret of Dropbox, rename `_config-dropbox.js` in [Routes](/routes) to `config-dropbox.js`. Put the key and secret in the corresponding lines.
+ [![](assets/demo-callback-production-dropbox.jpg)] 
+
+* if you want to local test dropbox feature, please follow the guidence at the other sample [data.management.api-nodejs-sample](https://github.com/Developer-Autodesk/data.management.api-nodejs-sample)
+
+
 
 ## License
 
