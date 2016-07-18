@@ -33,10 +33,33 @@ Try this sample live at https://forge-dm-design-auto.herokuapp.com/# (or see it 
 4. Apply credencials of Design Automation API from https://developer.autodesk.com/. Rename `_Credential.cs` in [Local Test Harness](management/ActivityManager) to `Credentials.cs`. Put your consumer key and secret key at line 12 and 13 of `Credentials.cs`.
 5. Build project [Local Test Harness](management/ActivityManager) and run it. It will create a custom activity with the package from [App Package](management/CrxApp), create a work item to run a demo job, using a [demo drawing file](http://download.autodesk.com/us/support/files/autocad_2015_templates/acad.dwt) and a [demo json file] (http://through-the-interface.typepad.com/test/jigtest.json). Finally it outputs a result drawing that jigsaw data will be embedded. 
 6. Create a new application on [https://developer.autodesk.com](https://developer.autodesk.com) with "**CallBack URL**" set to your own server address.  Rename `_config-prod.js` in [Routes](/routes) to `config-prod.js`. Put your consumer key and secret  at line 8 and 9 of `config-prod.js`.
+
   [![](assets/demo-callback-production-deployment.png)] 
   * For local test, you will need to specify "**CallBack URL**"  to "http://dev.example.com". Add this line in your computer's `/etc/hosts` file: `127.0.0.1	dev.example.com`  .Here is some info on how to modify your "hosts" file: [https://support.rackspace.com/how-to/modify-your-hosts-file/](https://support.rackspace.com/how-to/modify-your-hosts-file/)
+  
     [![](assets/demo-callback-production-localtest.png)] 
 
+7. If you want to test with Staging of Forge. Repeat step 6, but apply the key and secret on https://developer-stg.autodesk.com. And rename `_config-stg.js` in [Routes](/routes) to `config-stg.js`. Put the key and secret in the corresponding lines.
+
+8. Local test:
+   * Switch to root path, run $ Node server.js. Input http://dev.example.com:8000/ in the browser, follow the steps in [Jigsaw Demo](http://autode.sk/1XSkKtM) to test
+9. Deployment test:
+   * Input your website address in the browser, follow the steps in [Jigsaw Demo](http://autode.sk/1XSkKtM) to test
+ 
 
 
+# DropBox integration
+
+The feature <b>Send to DropBox</b> requires a developer key & secret. Please visit [DropBox Developer](https://www.dropbox.com/developers/apps) and create one.  Update the file /routes/dropbox.js with this information. For this sample, make sure to use http://localhost:3000/api/dropbox/callback as Redirect URI (for OAuth authentication) on Dropbox key creation. This sample code have a workaround to deal with local.host & localhost redirect, see comments at dropbox.js file. Also note that new developer keys on dropbox are created with Status:Development, so it will only work with your account (owner of the key). You must apply for Prodction with Dropbox team so you can use with other users.
+
+After applying the key and secret of Dropbox, rename `_config-dropbox.js` in [Routes](/routes) to `config-dropbox.js`. Put the key and secret in the corresponding lines.
+
+## License
+
+These samples are licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
+
+##Written by 
+
+Xiaodong Liang 
+Autodesk Forge, 2016
 
