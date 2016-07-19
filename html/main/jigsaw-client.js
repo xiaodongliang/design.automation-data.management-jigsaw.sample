@@ -519,8 +519,8 @@ function doworkitem(isdwg){
         //keep most arguments of jigsawify. only add two arguments
         var args = {
             Pieces: $('#pieces').val(),
-            Width: Width,
-            Height:Height,
+            Width: parseInt(inputWidth),
+            Height:parseInt(inputHeight),
             XRes:newArgs.XRes,
             YRes:newArgs.YRes,
             units: $('#units').val(),
