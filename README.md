@@ -14,7 +14,10 @@ This sample is extended from [jigsawify](https://github.com/KeanW/jigsawify) sam
 e.g. if the source dwg is:
 [![](assets/sourcedwg.png)]
 
-After converting, the result dwg is:
+After converting with the image, the result dwg is:
+
+[![](assets/test_image1.jpg)]
+
 [![](assets/resultdwg.png)]
 
 ## Live demo
